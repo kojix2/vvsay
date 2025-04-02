@@ -5,6 +5,8 @@ require "./parser"
 require "./client"
 require "./version"
 
+Colorize.on_tty_only!
+
 module Zunsay
   class CLI
     class_property debug : Bool = false

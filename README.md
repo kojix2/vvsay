@@ -54,30 +54,28 @@ zunsay -t "こんにちは、世界" -s 1 -o output.wav
 ### オプション
 
 ```
-使用方法: zunsay [オプション] [コマンド]
+使用方法: zunsay <コマンド> [オプション]
 
 コマンド:
-  speakers    - 利用可能な話者一覧を表示
-  synthesis   - テキストから音声を合成 (デフォルト)
+    speakers                         speakers    利用可能な話者一覧を表示
+    synthesis                        テキストから音声を合成
+    query                            音声合成用クエリの操作
 
-共通オプション:
-    -h HOST, --host=HOST             VOICEVOX Engine のホスト (デフォルト: 127.0.0.1)
-    -p PORT, --port=PORT             VOICEVOX Engine のポート (デフォルト: 50021)
-
-音声合成オプション:
+一般オプション:
     -t TEXT, --text=TEXT             合成するテキスト
     -s ID, --speaker=ID              話者ID (デフォルト: 1)
     -o FILE, --output=FILE           出力ファイル名 (デフォルト: output.wav)
-    --speed=SCALE                    話速のスケール (デフォルト: 1.0)
-    --pitch=SCALE                    音高のスケール (デフォルト: 0.0)
-    --intonation=SCALE               抑揚のスケール (デフォルト: 1.0)
-    --volume=SCALE                   音量のスケール (デフォルト: 1.0)
+    -S SCALE, --speed=SCALE          話速のスケール (デフォルト: 1.0)
+    -T SCALE, --pitch=SCALE          音高のスケール (デフォルト: 0.0)
+    -I SCALE, --intonation=SCALE     抑揚のスケール (デフォルト: 1.0)
+    -V SCALE, --volume=SCALE         音量のスケール (デフォルト: 1.0)
     -P, --play                       音声合成後に自動再生する
-
-その他:
-    --help                           ヘルプを表示
+    --host=HOST                      VOICEVOX Engine のホスト (デフォルト: 127.0.0.1)
+    --port=PORT                      VOICEVOX Engine のポート (デフォルト: 50021)
+    --stdin                          標準入力からテキストを読み込む
     --version                        バージョンを表示
     -d, --debug                      エラー時にバックトレースを表示
+    -h, --help                       ヘルプを表示
 ```
 
 ## 開発
