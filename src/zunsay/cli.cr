@@ -80,7 +80,7 @@ module Zunsay
       end
 
       # 音声合成の実行
-      puts "#{"テキスト".colorize.green.bold}「#{option.text.colorize.green}」を#{"話者ID".colorize.magenta.bold} #{option.speaker_id.to_s.colorize.magenta} で合成します..."
+      puts "#{"テキスト".colorize.green.bold}「#{option.text.colorize.bold}」を#{"話者ID".colorize.magenta.bold} #{option.speaker_id.to_s.colorize.magenta} で合成します..."
       client = Client.new(option.host, option.port)
       query = client.audio_query(option.text, option.speaker_id)
       query = client.apply_parameters(query, option)
@@ -136,7 +136,7 @@ module Zunsay
       end
 
       # 音声合成用クエリの作成
-      puts "#{"テキスト".colorize.green.bold}「#{option.text.colorize.green}」の音声合成用クエリを作成します..."
+      puts "#{"テキスト".colorize.green.bold}「#{option.text.colorize.bold}」の音声合成用クエリを作成します..."
       client = Client.new(option.host, option.port)
       query = client.audio_query(option.text, option.speaker_id)
 

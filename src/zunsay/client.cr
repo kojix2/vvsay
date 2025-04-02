@@ -51,7 +51,6 @@ module Zunsay
 
       # レスポンスをファイルに保存
       File.write(output_file, response.body)
-      puts "音声ファイルを保存しました: #{output_file}"
     end
   end
 end
