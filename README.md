@@ -13,7 +13,8 @@ VOICEVOX Engine の API を呼び出すための Crystal 製 CLI ツール。
 ### GitHub Release からバイナリを入手
 
 右の[Release](https://github.com/kojix2/zunsay/releases)からダウンロード
-※ MacOS版はまともに動かないのでソースからビルドが必要
+
+※ MacOS版は動的リンクが決め打ちなので自分でビルドしないと動きません
 
 ### ソースからビルド
 
