@@ -1,5 +1,6 @@
 require "crest"
 require "json"
+require "colorize"
 require "./parser"
 require "./client"
 require "./version"
@@ -33,20 +34,20 @@ module Zunsay
         raise ArgumentError.new("不明なアクション: #{option.action}")
       end
     rescue ex : Crest::RequestFailed
-      error_message = "\n[zunsay] エラー: #{ex.class} #{ex.message}"
-      error_message += "\nステータスコード: #{ex.http_code}"
-      error_message += "\nレスポンス: #{ex.response.body}" if ex.response
+      error_message = "\n[zunsay] #{"エラー:".colorize.red.bold} #{ex.class} #{ex.message}"
+      error_message += "\n#{"ステータスコード:".colorize.yellow} #{ex.http_code}"
+      error_message += "\n#{"レスポンス:".colorize.yellow} #{ex.response.body}" if ex.response
       error_message += "\n#{ex.backtrace.join("\n")}" if CLI.debug
       STDERR.puts error_message
       exit 1
     rescue ex : Crest::RequestTimeout
-      error_message = "\n[zunsay] エラー: VOICEVOX Engine に接続できませんでした。"
+      error_message = "\n[zunsay] #{"エラー:".colorize.red.bold} VOICEVOX Engine に接続できませんでした。"
       error_message += "\nホスト #{option.host}:#{option.port} が正しいか、Engine が起動しているか確認してください。"
       error_message += "\n#{ex.backtrace.join("\n")}" if CLI.debug
       STDERR.puts error_message
       exit 1
     rescue ex
-      error_message = "\n[zunsay] エラー: #{ex.message}"
+      error_message = "\n[zunsay] #{"エラー:".colorize.red.bold} #{ex.message}"
       error_message += "\n#{ex.backtrace.join("\n")}" if CLI.debug
       STDERR.puts error_message
       exit 1
@@ -60,12 +61,12 @@ module Zunsay
         uuid = speaker["speaker_uuid"].as_s
         styles = speaker["styles"].as_a
 
-        puts "名前: #{name} (UUID: #{uuid})"
-        puts "スタイル:"
+        puts "#{"名前:".colorize.blue.bold} #{name.colorize.blue} (UUID: #{uuid.colorize(:dark_gray)})"
+        puts "#{"スタイル:".colorize.cyan.bold}"
         styles.each do |style|
           style_name = style["name"].as_s
           style_id = style["id"].as_i
-          puts "  - #{style_name} (ID: #{style_id})"
+          puts "  - #{style_name.colorize.cyan} (ID: #{style_id.to_s.colorize(:dark_gray)})"
         end
         puts
       end
@@ -74,24 +75,30 @@ module Zunsay
     private def synthesize_voice
       # テキストが指定されていない場合はエラー
       if option.text.empty?
-        STDERR.puts "エラー: テキストが指定されていません。-t または --text オプションでテキストを指定してください。"
+        STDERR.puts "#{"エラー:".colorize.red.bold} テキストが指定されていません。-t または --text オプションでテキストを指定してください。"
         exit 1
       end
 
       # 音声合成の実行
-      puts "テキスト「#{option.text}」を話者ID #{option.speaker_id} で合成します..."
+      puts "#{"テキスト".colorize.green.bold}「#{option.text.colorize.green}」を#{"話者ID".colorize.magenta.bold} #{option.speaker_id.to_s.colorize.magenta} で合成します..."
       client = Client.new(option.host, option.port)
       query = client.audio_query(option.text, option.speaker_id)
       query = client.apply_parameters(query, option)
-      
+
       # パラメータ情報を表示
-      puts "話速: #{option.speed_scale}, 音高: #{option.pitch_scale}, 抑揚: #{option.intonation_scale}, 音量: #{option.volume_scale}"
-      
+      puts "#{"話速:".colorize.yellow} #{option.speed_scale.to_s.colorize.light_yellow}, " +
+           "#{"音高:".colorize.blue} #{option.pitch_scale.to_s.colorize.light_blue}, " +
+           "#{"抑揚:".colorize.magenta} #{option.intonation_scale.to_s.colorize.light_magenta}, " +
+           "#{"音量:".colorize.cyan} #{option.volume_scale.to_s.colorize.light_cyan}"
+
       client.synthesis(query, option.speaker_id, option.output_file)
-      
+
+      # 成功メッセージ
+      puts "#{"成功:".colorize.green.bold} 音声ファイルを保存しました: #{option.output_file.colorize.green}"
+
       # 音声再生の実行（--playオプションが指定されている場合）
       if option.play
-        puts "音声を再生します..."
+        puts "#{"再生:".colorize.blue.bold} 音声を再生します..."
         case
         when system("which afplay >/dev/null 2>&1") # macOS
           system("afplay #{option.output_file}")
@@ -102,13 +109,13 @@ module Zunsay
         when system("which powershell >/dev/null 2>&1") # Windows
           system(%Q(powershell -c (New-Object Media.SoundPlayer "#{option.output_file}").PlaySync()))
         else
-          puts "警告: 適切な音声再生コマンドが見つかりませんでした。"
+          puts "#{"警告:".colorize.yellow.bold} 適切な音声再生コマンドが見つかりませんでした。"
         end
       end
     end
 
     private def print_version
-      puts "zunsay version #{VERSION}"
+      puts "#{"zunsay".colorize.magenta.bold} version #{VERSION.colorize.light_magenta}"
     end
 
     private def print_help
@@ -118,7 +125,7 @@ module Zunsay
     private def create_query
       # テキストが指定されていない場合はエラー
       if option.text.empty?
-        STDERR.puts "エラー: テキストが指定されていません。-t または --text オプションでテキストを指定してください。"
+        STDERR.puts "#{"エラー:".colorize.red.bold} テキストが指定されていません。-t または --text オプションでテキストを指定してください。"
         exit 1
       end
 
@@ -129,19 +136,19 @@ module Zunsay
       end
 
       # 音声合成用クエリの作成
-      puts "テキスト「#{option.text}」の音声合成用クエリを作成します..."
+      puts "#{"テキスト".colorize.green.bold}「#{option.text.colorize.green}」の音声合成用クエリを作成します..."
       client = Client.new(option.host, option.port)
       query = client.audio_query(option.text, option.speaker_id)
-      
+
       # クエリをJSONファイルに保存
       File.write(output_file, query.to_json)
-      puts "クエリをファイルに保存しました: #{output_file}"
+      puts "#{"成功:".colorize.green.bold} クエリをファイルに保存しました: #{output_file.colorize.green}"
     end
 
     private def modify_query
       # 入力ファイルが指定されていない場合はエラー
       if option.input_file.empty?
-        STDERR.puts "エラー: 入力ファイルが指定されていません。-i または --input オプションで入力ファイルを指定してください。"
+        STDERR.puts "#{"エラー:".colorize.red.bold} 入力ファイルが指定されていません。-i または --input オプションで入力ファイルを指定してください。"
         exit 1
       end
 
@@ -149,20 +156,23 @@ module Zunsay
       output_file = option.output_file.empty? ? option.input_file : option.output_file
 
       # クエリファイルの読み込み
-      puts "クエリファイル「#{option.input_file}」を読み込みます..."
+      puts "#{"読込:".colorize.blue.bold} クエリファイル「#{option.input_file.colorize.blue}」を読み込みます..."
       query_json = File.read(option.input_file)
       query = JSON.parse(query_json)
 
       # パラメータの適用
       client = Client.new(option.host, option.port)
       modified_query = client.apply_parameters(query, option)
-      
+
       # パラメータ情報を表示
-      puts "話速: #{option.speed_scale}, 音高: #{option.pitch_scale}, 抑揚: #{option.intonation_scale}, 音量: #{option.volume_scale}"
-      
+      puts "#{"話速:".colorize.yellow} #{option.speed_scale.to_s.colorize.light_yellow}, " +
+           "#{"音高:".colorize.blue} #{option.pitch_scale.to_s.colorize.light_blue}, " +
+           "#{"抑揚:".colorize.magenta} #{option.intonation_scale.to_s.colorize.light_magenta}, " +
+           "#{"音量:".colorize.cyan} #{option.volume_scale.to_s.colorize.light_cyan}"
+
       # 修正したクエリをJSONファイルに保存
       File.write(output_file, modified_query.to_json)
-      puts "修正したクエリをファイルに保存しました: #{output_file}"
+      puts "#{"成功:".colorize.green.bold} 修正したクエリをファイルに保存しました: #{output_file.colorize.green}"
     end
   end
 end

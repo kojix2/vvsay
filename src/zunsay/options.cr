@@ -15,7 +15,7 @@ module Zunsay
     property pitch_scale : Float64 = 0.0
     property intonation_scale : Float64 = 1.0
     property volume_scale : Float64 = 1.0
-    
+
     # 音声再生の設定
     property play : Bool = false
 

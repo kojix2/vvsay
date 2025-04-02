@@ -38,7 +38,7 @@ module Zunsay
       on("-t TEXT", "--text=TEXT", "合成するテキスト") { |t| @options.text = t }
       on("-s ID", "--speaker=ID", "話者ID (デフォルト: 1)") { |s| @options.speaker_id = s.to_i }
       on("-o FILE", "--output=FILE", "出力ファイル名 (デフォルト: output.wav)") { |o| @options.output_file = o }
-      
+
       # 音声合成の詳細設定オプション
       on("-S SCALE", "--speed=SCALE", "話速のスケール (デフォルト: 1.0)") { |s| @options.speed_scale = s.to_f }
       on("-T SCALE", "--pitch=SCALE", "音高のスケール (デフォルト: 0.0)") { |p| @options.pitch_scale = p.to_f }
@@ -59,11 +59,18 @@ module Zunsay
       @help_message = ""
 
       self.banner = <<-BANNER
-      使用方法: zunsay [オプション] [コマンド]
+
+      #{"Program:".colorize.green.bold} #{"ZUNSAY (VOICEVOX Engine を呼び出すための Crystal 製 CLI ツール)".colorize.bold}
+      #{"Version:".colorize.green} #{VERSION}
+      #{"Source: ".colorize.green} https://github.com/kojix2/zunsay
+
+      #{"使用方法:".colorize.green.bold} zunsay <コマンド> [オプション]
       BANNER
 
+      separator("\n#{"コマンド:".colorize.green.bold}")
+
       # speakers サブコマンド
-      on("speakers", "利用可能な話者一覧を表示") do
+      on("speakers", "speakers    利用可能な話者一覧を表示") do
         _set_action_(Action::Speakers, "使用方法: zunsay speakers [オプション]")
 
         on("--format=FORMAT", "出力形式 (text, json)") do |format|
@@ -85,7 +92,7 @@ module Zunsay
 
         _synthesis_options_
         _connection_options_
-        
+
         on("--format=FORMAT", "出力形式 (wav, mp3, ogg)") do |format|
           @options.output_format = format
         end
@@ -104,11 +111,11 @@ module Zunsay
 
         on("create", "音声合成用クエリを作成") do
           _set_action_(Action::CreateQuery, "使用方法: zunsay query create [オプション]")
-          
+
           on("-t TEXT", "--text=TEXT", "合成するテキスト") { |t| @options.text = t }
           on("-s ID", "--speaker=ID", "話者ID (デフォルト: 1)") { |s| @options.speaker_id = s.to_i }
           on("-o FILE", "--output=FILE", "出力JSONファイル名") { |o| @options.output_file = o }
-          
+
           _connection_options_
           _on_debug_
           _on_help_
@@ -116,15 +123,15 @@ module Zunsay
 
         on("modify", "音声合成用クエリを修正") do
           _set_action_(Action::ModifyQuery, "使用方法: zunsay query modify [オプション] <クエリファイル>")
-          
+
           on("-i FILE", "--input=FILE", "入力JSONファイル名") { |i| @options.input_file = i }
           on("-o FILE", "--output=FILE", "出力JSONファイル名") { |o| @options.output_file = o }
-          
+
           on("-S SCALE", "--speed=SCALE", "話速のスケール") { |s| @options.speed_scale = s.to_f }
           on("-T SCALE", "--pitch=SCALE", "音高のスケール") { |p| @options.pitch_scale = p.to_f }
           on("-I SCALE", "--intonation=SCALE", "抑揚のスケール") { |i| @options.intonation_scale = i.to_f }
           on("-V SCALE", "--volume=SCALE", "音量のスケール") { |v| @options.volume_scale = v.to_f }
-          
+
           _on_debug_
           _on_help_
         end
@@ -133,8 +140,10 @@ module Zunsay
         _on_help_
       end
 
+      separator("\n#{"一般オプション:".colorize.green.bold}")
+
       # メインコマンドのオプション
-      _synthesis_options_  # デフォルトはsynthesisコマンドと同じオプション
+      _synthesis_options_ # デフォルトはsynthesisコマンドと同じオプション
       _connection_options_
 
       on("--stdin", "標準入力からテキストを読み込む") do
@@ -149,13 +158,13 @@ module Zunsay
       _on_help_
 
       invalid_option do |flag|
-        STDERR.puts "エラー: #{flag} は無効なオプションです。"
+        STDERR.puts "#{"エラー:".colorize.red.bold} #{flag} は無効なオプションです。"
         STDERR.puts self
         exit(1)
       end
 
       missing_option do |flag|
-        STDERR.puts "エラー: #{flag} は引数が必要です。"
+        STDERR.puts "#{"エラー:".colorize.red.bold} #{flag} は引数が必要です。"
         STDERR.puts self
         exit(1)
       end
