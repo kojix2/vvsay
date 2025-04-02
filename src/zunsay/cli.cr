@@ -84,6 +84,23 @@ module Zunsay
       puts "話速: #{option.speed_scale}, 音高: #{option.pitch_scale}, 抑揚: #{option.intonation_scale}, 音量: #{option.volume_scale}"
       
       client.synthesis(query, option.speaker_id, option.output_file)
+      
+      # 音声再生の実行（--playオプションが指定されている場合）
+      if option.play
+        puts "音声を再生します..."
+        case
+        when system("which afplay >/dev/null 2>&1") # macOS
+          system("afplay #{option.output_file}")
+        when system("which aplay >/dev/null 2>&1") # Linux
+          system("aplay #{option.output_file}")
+        when system("which paplay >/dev/null 2>&1") # PulseAudio
+          system("paplay #{option.output_file}")
+        when system("which powershell >/dev/null 2>&1") # Windows
+          system(%Q(powershell -c (New-Object Media.SoundPlayer "#{option.output_file}").PlaySync()))
+        else
+          puts "警告: 適切な音声再生コマンドが見つかりませんでした。"
+        end
+      end
     end
 
     private def print_version

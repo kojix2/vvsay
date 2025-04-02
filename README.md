@@ -1,6 +1,8 @@
-# zunsay
+# zunsay（仮）
 
 VOICEVOX Engine の API を呼び出すための Crystal 製 CLI ツール。
+
+このツールは作りかけなので、プロジェクトの名前からオプションまでコロコロ変わる可能性があります
 
 ## 必要条件
 

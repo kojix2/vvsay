@@ -33,7 +33,7 @@ module Zunsay
       query_hash["pitchScale"] = JSON::Any.new(options.pitch_scale)
       query_hash["intonationScale"] = JSON::Any.new(options.intonation_scale)
       query_hash["volumeScale"] = JSON::Any.new(options.volume_scale)
-      JSON::Any.new(query_hash.to_json)
+      JSON::Any.new(query_hash)
     end
 
     # 音声合成を実行する

@@ -29,6 +29,7 @@ module Zunsay
       on("--pitch=SCALE", "音高のスケール (デフォルト: 0.0)") { |p| @options.pitch_scale = p.to_f }
       on("--intonation=SCALE", "抑揚のスケール (デフォルト: 1.0)") { |i| @options.intonation_scale = i.to_f }
       on("--volume=SCALE", "音量のスケール (デフォルト: 1.0)") { |v| @options.volume_scale = v.to_f }
+      on("-P", "--play", "音声合成後に自動再生する") { @options.play = true }
 
       separator("\nその他:")
       on("--help", "ヘルプを表示") do
