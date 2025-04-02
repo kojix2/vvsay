@@ -25,6 +25,10 @@ module Zunsay
         print_version
       when Action::Help
         print_help
+      when Action::CreateQuery
+        create_query
+      when Action::ModifyQuery
+        modify_query
       else
         raise ArgumentError.new("不明なアクション: #{option.action}")
       end
@@ -109,6 +113,56 @@ module Zunsay
 
     private def print_help
       puts parser.help_message
+    end
+
+    private def create_query
+      # テキストが指定されていない場合はエラー
+      if option.text.empty?
+        STDERR.puts "エラー: テキストが指定されていません。-t または --text オプションでテキストを指定してください。"
+        exit 1
+      end
+
+      # 出力ファイルが指定されていない場合はデフォルト値を設定
+      output_file = option.output_file
+      if output_file == "output.wav"
+        output_file = "query.json"
+      end
+
+      # 音声合成用クエリの作成
+      puts "テキスト「#{option.text}」の音声合成用クエリを作成します..."
+      client = Client.new(option.host, option.port)
+      query = client.audio_query(option.text, option.speaker_id)
+      
+      # クエリをJSONファイルに保存
+      File.write(output_file, query.to_json)
+      puts "クエリをファイルに保存しました: #{output_file}"
+    end
+
+    private def modify_query
+      # 入力ファイルが指定されていない場合はエラー
+      if option.input_file.empty?
+        STDERR.puts "エラー: 入力ファイルが指定されていません。-i または --input オプションで入力ファイルを指定してください。"
+        exit 1
+      end
+
+      # 出力ファイルが指定されていない場合は入力ファイルを上書き
+      output_file = option.output_file.empty? ? option.input_file : option.output_file
+
+      # クエリファイルの読み込み
+      puts "クエリファイル「#{option.input_file}」を読み込みます..."
+      query_json = File.read(option.input_file)
+      query = JSON.parse(query_json)
+
+      # パラメータの適用
+      client = Client.new(option.host, option.port)
+      modified_query = client.apply_parameters(query, option)
+      
+      # パラメータ情報を表示
+      puts "話速: #{option.speed_scale}, 音高: #{option.pitch_scale}, 抑揚: #{option.intonation_scale}, 音量: #{option.volume_scale}"
+      
+      # 修正したクエリをJSONファイルに保存
+      File.write(output_file, modified_query.to_json)
+      puts "修正したクエリをファイルに保存しました: #{output_file}"
     end
   end
 end

@@ -4,5 +4,7 @@ module Zunsay
     Synthesis
     Version
     Help
+    CreateQuery
+    ModifyQuery
   end
 end

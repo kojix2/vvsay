@@ -18,5 +18,17 @@ module Zunsay
     
     # 音声再生の設定
     property play : Bool = false
+
+    # 標準入力からテキストを読み込む設定
+    property stdin : Bool = false
+
+    # 入力ファイル（クエリJSONなど）
+    property input_file : String = ""
+
+    # 出力形式
+    property output_format : String = "wav"
+
+    # フィルタリング設定
+    property filter : String = ""
   end
 end
