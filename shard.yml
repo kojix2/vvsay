@@ -1,10 +1,10 @@
 name: zunsay
-version: 0.1.0
+version: 0.0.0
 
 authors:
   - kojix2 <2xijok@gmail.com>
 
-targets:
+targets0
   zunsay:
     main: src/zunsay.cr
 
