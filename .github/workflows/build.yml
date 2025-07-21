@@ -28,6 +28,9 @@ jobs:
         run: shards build --release
       - name: Run executable (help)
         run: bin/zunsay --help
+      - name: Check dependent libraries (macOS)
+        if: matrix.os == 'macos'
+        run: otool -L bin/zunsay
       - uses: actions/upload-artifact@v4
         with:
           name: zunsay-cli-${{ matrix.os }}
