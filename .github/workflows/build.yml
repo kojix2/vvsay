@@ -115,7 +115,13 @@ jobs:
           ln -s $(brew ls openssl@3 | grep libcrypto.a) .
           ln -s $(brew ls zlib | grep libz.a) .
           ln -s $(brew ls libevent | grep libevent.a) .
-          ln -s $(brew ls zstd | grep libzstd.a) .
+          ln -s $(find $(brew --prefix libgc) -name 'libgc.a') .
+          ln -s $(find $(brew --prefix pcre2) -name 'libpcre2-8.a') .
+          ln -s $(find $(brew --prefix openssl@3) -name 'libssl.a') .
+          ln -s $(find $(brew --prefix openssl@3) -name 'libcrypto.a') .
+          ln -s $(find $(brew --prefix zlib) -name 'libz.a') .
+          ln -s $(find $(brew --prefix libevent) -name 'libevent.a') .
+          ln -s $(find $(brew --prefix zstd) -name 'libzstd.a') .
           STATIC_LIBS="-L $(pwd) $(pwd)/libgc.a $(pwd)/libpcre2-8.a $(pwd)/libssl.a $(pwd)/libcrypto.a $(pwd)/libz.a $(pwd)/libevent.a $(pwd)/libzstd.a -Wl,-search_paths_first"
           crystal spec
           shards build --link-flags="$STATIC_LIBS" --release
