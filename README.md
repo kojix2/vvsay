@@ -1,7 +1,7 @@
-# zunsay（仮）
+# vvsay
 
-[![Lines of Code](https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2Fzunsay%2Flines)](https://tokei.kojix2.net/github/kojix2/zunsay)
-[![build](https://github.com/kojix2/zunsay/actions/workflows/build.yml/badge.svg)](https://github.com/kojix2/zunsay/actions/workflows/build.yml)
+[![Lines of Code](https://img.shields.io/endpoint?url=https%3A%2F%2Ftokei.kojix2.net%2Fbadge%2Fgithub%2Fkojix2%2Fvvsay%2Flines)](https://tokei.kojix2.net/github/kojix2/vvsay)
+[![build](https://github.com/kojix2/vvsay/actions/workflows/build.yml/badge.svg)](https://github.com/kojix2/vvsay/actions/workflows/build.yml)
 
 VOICEVOX Engine の API を呼び出すための Crystal 製 CLI ツール。
 
@@ -15,21 +15,21 @@ VOICEVOX Engine の API を呼び出すための Crystal 製 CLI ツール。
 
 ### GitHub Release からバイナリを入手
 
-右の[Release](https://github.com/kojix2/zunsay/releases)からダウンロード
+右の[Release](https://github.com/kojix2/vvsay/releases)からダウンロード
 
 ※ MacOS版は動的リンクが決め打ちなので自分でビルドしないと動きません
 
 ### ソースからビルド
 
 ```bash
-git clone https://github.com/kojix2/zunsay.git
-cd zunsay
+git clone https://github.com/kojix2/vvsay.git
+cd vvsay
 shards install
 shards build --release
-bin/zunsay --version
+bin/vvsay --version
 ```
 
-ビルドされた実行ファイル `zunsay` をパスの通った場所に配置してください。
+ビルドされた実行ファイル `vvsay` をパスの通った場所に配置してください。
 
 ## 使い方
 
@@ -38,7 +38,7 @@ bin/zunsay --version
 利用可能な話者（キャラクター）とそのスタイルの一覧を表示します：
 
 ```bash
-zunsay speakers
+vvsay speakers
 ```
 
 ### 音声合成
@@ -46,19 +46,19 @@ zunsay speakers
 テキストから音声を合成します：
 
 ```bash
-zunsay synthesis -t "こんにちは、世界" -s 1 -o output.wav
+vvsay synthesis -t "こんにちは、世界" -s 1 -o output.wav
 ```
 
 または：
 
 ```bash
-zunsay -t "こんにちは、世界" -s 1 -o output.wav
+vvsay -t "こんにちは、世界" -s 1 -o output.wav
 ```
 
 ### オプション
 
 ```
-使用方法: zunsay <コマンド> [オプション]
+使用方法: vvsay <コマンド> [オプション]
 
 コマンド:
     speakers                         speakers    利用可能な話者一覧を表示
@@ -94,7 +94,7 @@ zunsay -t "こんにちは、世界" -s 1 -o output.wav
 
 ## 貢献
 
-1. フォークします (<https://github.com/kojix2/zunsay/fork>)
+1. フォークします (<https://github.com/kojix2/vvsay/fork>)
 2. 機能ブランチを作成します (`git checkout -b my-new-feature`)
 3. 変更をコミットします (`git commit -am 'Add some feature'`)
 4. ブランチにプッシュします (`git push origin my-new-feature`)

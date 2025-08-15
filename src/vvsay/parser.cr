@@ -64,7 +64,7 @@ module Vvsay
       #{"Version:".colorize.green} #{VERSION}
       #{"Source: ".colorize.green} https://github.com/kojix2/vvsay
 
-      #{"使用方法:".colorize.green.bold} zunsay <コマンド> [オプション]
+      #{"使用方法:".colorize.green.bold} vvsay <コマンド> [オプション]
       BANNER
 
       separator("\n#{"コマンド:".colorize.green.bold}")
@@ -88,7 +88,7 @@ module Vvsay
 
       # synthesis サブコマンド
       on("synthesis", "テキストから音声を合成") do
-        _set_action_(Action::Synthesis, "使用方法: zunsay synthesis [オプション]")
+        _set_action_(Action::Synthesis, "使用方法: vvsay synthesis [オプション]")
 
         _synthesis_options_
         _connection_options_
@@ -110,7 +110,7 @@ module Vvsay
         _set_action_(Action::Help, "使用方法: vvsay query [オプション] <サブコマンド>")
 
         on("create", "音声合成用クエリを作成") do
-          _set_action_(Action::CreateQuery, "使用方法: zunsay query create [オプション]")
+          _set_action_(Action::CreateQuery, "使用方法: vvsay query create [オプション]")
 
           on("-t TEXT", "--text=TEXT", "合成するテキスト") { |t| @options.text = t }
           on("-s ID", "--speaker=ID", "話者ID (デフォルト: 1)") { |s| @options.speaker_id = s.to_i }
@@ -122,7 +122,7 @@ module Vvsay
         end
 
         on("modify", "音声合成用クエリを修正") do
-          _set_action_(Action::ModifyQuery, "使用方法: zunsay query modify [オプション] <クエリファイル>")
+          _set_action_(Action::ModifyQuery, "使用方法: vvsay query modify [オプション] <クエリファイル>")
 
           on("-i FILE", "--input=FILE", "入力JSONファイル名") { |i| @options.input_file = i }
           on("-o FILE", "--output=FILE", "出力JSONファイル名") { |o| @options.output_file = o }
