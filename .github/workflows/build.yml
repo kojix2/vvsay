@@ -27,11 +27,12 @@ jobs:
       - name: Build executable
         run: shards build --release
       - name: Run executable (help)
-        run: bin/zunsay --help
+        run: bin/vvsay --help
       - name: Check dependent libraries (macOS)
         if: matrix.os == 'macos'
-        run: otool -L bin/zunsay
+        run: otool -L bin/vvsay
       - uses: actions/upload-artifact@v4
         with:
-          name: zunsay-cli-${{ matrix.os }}
-          path: bin/${{ matrix.os == 'windows' && 'zunsay.exe' || 'zunsay' }}
+          name: vvsay-cli-${{ matrix.os }}
+          path: bin/${{ matrix.os == 'windows' && 'vvsay.exe' || 'vvsay' }}
+}

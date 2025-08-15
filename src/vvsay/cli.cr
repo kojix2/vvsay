@@ -43,7 +43,7 @@ module Vvsay
       STDERR.puts error_message
       exit 1
     rescue ex : Crest::RequestTimeout
-      error_message = "\n[zunsay] #{"エラー:".colorize.red.bold} VOICEVOX Engine に接続できませんでした。"
+      error_message = "\n[vvsay] #{"エラー:".colorize.red.bold} VOICEVOX Engine に接続できませんでした。"
       error_message += "\nホスト #{option.host}:#{option.port} が正しいか、Engine が起動しているか確認してください。"
       error_message += "\n#{ex.backtrace.join("\n")}" if CLI.debug
       STDERR.puts error_message

@@ -32,18 +32,18 @@ jobs:
           docker exec alpine apk add readline-dev readline-static ncurses-dev ncurses-static ncurses-libs
           docker exec alpine shards install --without-development --release --static
           docker exec alpine shards build --release --static
-          docker exec alpine chmod +x bin/zunsay
-          docker exec alpine gzip bin/zunsay
-          docker exec alpine mv bin/zunsay.gz bin/zunsay-linux.gz
+          docker exec alpine chmod +x bin/vvsay
+          docker exec alpine gzip bin/vvsay
+          docker exec alpine mv bin/vvsay.gz bin/vvsay-linux.gz
 
       - name: Run Mac Build x64
         if: matrix.os == 'macos'
         run: |
           shards install --without-development --release
           shards build --release
-          chmod +x bin/zunsay
-          gzip bin/zunsay
-          mv bin/zunsay.gz bin/zunsay-macos.gz
+          chmod +x bin/vvsay
+          gzip bin/vvsay
+          mv bin/vvsay.gz bin/vvsay-macos.gz
 
       - name: Run Windows Build x64
         if: matrix.os == 'windows'
@@ -51,13 +51,13 @@ jobs:
           shards install --without-development --release
           shards build --release --static
           Set-ExecutionPolicy RemoteSigned -Scope Process
-          Compress-Archive -Path bin/zunsay.exe -DestinationPath bin/zunsay-windows.zip
+          Compress-Archive -Path bin/vvsay.exe -DestinationPath bin/vvsay-windows.zip
 
       - name: Upload Release Asset
         uses: softprops/action-gh-release@v2
         with:
           files: |
-            bin/zunsay-linux.gz
-            bin/zunsay-macos.gz
-            bin/zunsay-windows.zip
+            bin/vvsay-linux.gz
+            bin/vvsay-macos.gz
+            bin/vvsay-windows.zip
             LICENSE.txt
