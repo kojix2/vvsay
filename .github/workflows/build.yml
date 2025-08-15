@@ -61,7 +61,7 @@ jobs:
         shell: bash
         run: |
           mkdir -p bin
-          docker run -d --name alpine -v $(pwd):/workspace -w /workspace crystallang/crystal:latest-alpine tail -f /dev/null
+          docker run -d --name alpine -v $GITHUB_WORKSPACE:/workspace -w /workspace crystallang/crystal:latest-alpine tail -f /dev/null
           docker exec alpine apk add zlib-static zlib-dev openssl-libs-static openssl-dev pcre2-dev pcre2-static libgc-dev libevent-static libevent-dev zstd-static zstd-dev
           docker exec alpine shards install --without-development --release --static
           docker exec alpine crystal spec
