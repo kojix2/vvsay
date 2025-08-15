@@ -35,4 +35,3 @@ jobs:
         with:
           name: vvsay-cli-${{ matrix.os }}
           path: bin/${{ matrix.os == 'windows' && 'vvsay.exe' || 'vvsay' }}
-}
