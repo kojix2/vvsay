@@ -1,3 +1,3 @@
 require "./vvsay/cli"
 
-Vvsay::CLI.new.run
+VVsay::CLI.new.run
