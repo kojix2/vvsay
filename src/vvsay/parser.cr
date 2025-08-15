@@ -3,7 +3,7 @@ require "./action"
 require "./config"
 require "./options"
 
-module Zunsay
+module Vvsay
   class Parser < OptionParser
     getter options : Options
 
@@ -60,9 +60,9 @@ module Zunsay
 
       self.banner = <<-BANNER
 
-      #{"Program:".colorize.green.bold} #{"ZUNSAY (VOICEVOX Engine を呼び出すための Crystal 製 CLI ツール)".colorize.bold}
+      #{"Program:".colorize.green.bold} #{"VVSAY (VOICEVOX Engine を呼び出すための Crystal 製 CLI ツール)".colorize.bold}
       #{"Version:".colorize.green} #{VERSION}
-      #{"Source: ".colorize.green} https://github.com/kojix2/zunsay
+      #{"Source: ".colorize.green} https://github.com/kojix2/vvsay
 
       #{"使用方法:".colorize.green.bold} zunsay <コマンド> [オプション]
       BANNER
@@ -71,7 +71,7 @@ module Zunsay
 
       # speakers サブコマンド
       on("speakers", "speakers    利用可能な話者一覧を表示") do
-        _set_action_(Action::Speakers, "使用方法: zunsay speakers [オプション]")
+        _set_action_(Action::Speakers, "使用方法: vvsay speakers [オプション]")
 
         on("--format=FORMAT", "出力形式 (text, json)") do |format|
           @options.output_format = format
@@ -107,7 +107,7 @@ module Zunsay
 
       # query サブコマンド（音声合成用クエリの操作）
       on("query", "音声合成用クエリの操作") do
-        _set_action_(Action::Help, "使用方法: zunsay query [オプション] <サブコマンド>")
+        _set_action_(Action::Help, "使用方法: vvsay query [オプション] <サブコマンド>")
 
         on("create", "音声合成用クエリを作成") do
           _set_action_(Action::CreateQuery, "使用方法: zunsay query create [オプション]")
