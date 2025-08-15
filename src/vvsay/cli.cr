@@ -7,7 +7,7 @@ require "./version"
 
 Colorize.on_tty_only!
 
-module Vvsay
+module VVsay
   class CLI
     class_property debug : Bool = false
     getter parser : Parser

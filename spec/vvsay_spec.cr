@@ -1,7 +1,7 @@
 require "./spec_helper"
 
-describe Vvsay do
+describe VVsay do
   it "has a version number" do
-    Vvsay::VERSION.should be_a(String)
+    VVsay::VERSION.should be_a(String)
   end
 end

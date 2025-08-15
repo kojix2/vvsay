@@ -1,3 +1,3 @@
-module Vvsay
+module VVsay
   VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
 end

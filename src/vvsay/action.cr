@@ -1,4 +1,4 @@
-module Vvsay
+module VVsay
   enum Action
     Speakers
     Synthesis

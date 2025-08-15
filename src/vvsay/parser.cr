@@ -3,7 +3,7 @@ require "./action"
 require "./config"
 require "./options"
 
-module Vvsay
+module VVsay
   class Parser < OptionParser
     getter options : Options
 

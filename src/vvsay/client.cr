@@ -1,4 +1,4 @@
-module Vvsay
+module VVsay
   # API クライアントクラス
   class Client
     getter host : String
