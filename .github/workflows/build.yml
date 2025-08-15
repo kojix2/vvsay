@@ -100,7 +100,7 @@ jobs:
           tar czf $PKG.tar.gz $PKG
 
       - name: Build on macOS
-        if: startsWith(matrix.target, 'x86_64-apple-darwin') || startsWith(matrix.target, 'aarch64-apple-darwin')
+        if: contains(matrix.target, 'apple-darwin')
         shell: bash
         run: |
           shards install --without-development --release
