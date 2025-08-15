@@ -1,7 +1,7 @@
 require "./action"
 require "./config"
 
-module Zunsay
+module Vvsay
   class Options
     property action : Action = Action::Synthesis
     property host : String = DEFAULT_HOST

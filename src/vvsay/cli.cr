@@ -7,7 +7,7 @@ require "./version"
 
 Colorize.on_tty_only!
 
-module Zunsay
+module Vvsay
   class CLI
     class_property debug : Bool = false
     getter parser : Parser
@@ -36,7 +36,7 @@ module Zunsay
         raise ArgumentError.new("不明なアクション: #{option.action}")
       end
     rescue ex : Crest::RequestFailed
-      error_message = "\n[zunsay] #{"エラー:".colorize.red.bold} #{ex.class} #{ex.message}"
+      error_message = "\n[vvsay] #{"エラー:".colorize.red.bold} #{ex.class} #{ex.message}"
       error_message += "\n#{"ステータスコード:".colorize.yellow} #{ex.http_code}"
       error_message += "\n#{"レスポンス:".colorize.yellow} #{ex.response.body}" if ex.response
       error_message += "\n#{ex.backtrace.join("\n")}" if CLI.debug
@@ -49,7 +49,7 @@ module Zunsay
       STDERR.puts error_message
       exit 1
     rescue ex
-      error_message = "\n[zunsay] #{"エラー:".colorize.red.bold} #{ex.message}"
+      error_message = "\n[vvsay] #{"エラー:".colorize.red.bold} #{ex.message}"
       error_message += "\n#{ex.backtrace.join("\n")}" if CLI.debug
       STDERR.puts error_message
       exit 1
@@ -117,7 +117,7 @@ module Zunsay
     end
 
     private def print_version
-      puts "#{"zunsay".colorize.magenta.bold} version #{VERSION.colorize.light_magenta}"
+      puts "#{"vvsay".colorize.magenta.bold} version #{VERSION.colorize.light_magenta}"
     end
 
     private def print_help
